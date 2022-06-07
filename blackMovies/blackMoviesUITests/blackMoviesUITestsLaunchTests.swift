@@ -1,13 +1,13 @@
 //
-//  blackmoviesUITestsLaunchTests.swift
-//  blackmoviesUITests
+//  blackMoviesUITestsLaunchTests.swift
+//  blackMoviesUITests
 //
-//  Created by Igor Gomes on 27/05/22.
+//  Created by Igor Gomes on 07/06/22.
 //
 
 import XCTest
 
-class blackmoviesUITestsLaunchTests: XCTestCase {
+class blackMoviesUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

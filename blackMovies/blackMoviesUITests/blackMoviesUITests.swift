@@ -1,13 +1,13 @@
 //
-//  blackmoviesUITests.swift
-//  blackmoviesUITests
+//  blackMoviesUITests.swift
+//  blackMoviesUITests
 //
-//  Created by Igor Gomes on 27/05/22.
+//  Created by Igor Gomes on 07/06/22.
 //
 
 import XCTest
 
-class blackmoviesUITests: XCTestCase {
+class blackMoviesUITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
