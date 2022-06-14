@@ -14,7 +14,7 @@ struct Movie {
 
 }
 
-let movies: [Movie] = [
+let moviesUpcomig: [Movie] = [
     Movie(title: "Flash", dateMovie: "17/04/2022", image: #imageLiteral(resourceName: "flash.jpg")),
     Movie(title: "The Walking Dead", dateMovie: "17/04/2022", image: #imageLiteral(resourceName: "thewalkingdead")),
     Movie(title: "Homem-Aranha", dateMovie: "17/04/2022", image: #imageLiteral(resourceName: "homemaranha")),
@@ -30,5 +30,4 @@ let movies: [Movie] = [
 let moviesPopular: [Movie] = [
     Movie(title: "Flash", dateMovie: "17/04/2022", image: #imageLiteral(resourceName: "HotelTransylvania")),
     Movie(title: "The Walking Dead", dateMovie: "17/04/2022", image: #imageLiteral(resourceName: "thewalkingdead")),
-
 ]

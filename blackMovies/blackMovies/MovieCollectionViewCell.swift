@@ -8,12 +8,8 @@
 import UIKit
 
 class MovieCollectionViewCell: UICollectionViewCell {
-    
 
-    @IBOutlet weak var movieImagePopular: UIImageView!
-    @IBOutlet weak var movieDatePopular: UILabel!
-    @IBOutlet weak var movieNamePopular: UILabel!
-
+    @IBOutlet weak var tagView: UIView!
     @IBOutlet weak var movieName: UILabel!
     @IBOutlet weak var dateMovie: UILabel!
     @IBOutlet weak var movieImageView: UIImageView!
@@ -23,9 +19,9 @@ class MovieCollectionViewCell: UICollectionViewCell {
         movieName.text = movie.title
         dateMovie.text = movie.dateMovie
     }
-    func set(with movie: Movie){
-        movieImagePopular.image = movie.image
-        movieNamePopular.text = movie.title
-        movieDatePopular.text = movie.dateMovie
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        tagView.layer.borderWidth = 1
+        tagView.layer.borderColor = UIColor.white.cgColor
     }
 }
