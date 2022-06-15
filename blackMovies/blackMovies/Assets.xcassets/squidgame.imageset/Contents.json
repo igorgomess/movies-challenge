@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "marginal.jpg",
+      "filename" : "squidgame.jpg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "marginal@2x.jpg",
+      "filename" : "squidgame@2x.jpg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "marginal@3x.jpg",
+      "filename" : "squidgame@3x.jpg",
       "idiom" : "universal",
       "scale" : "3x"
     }
