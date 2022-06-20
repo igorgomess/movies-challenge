@@ -111,7 +111,7 @@
                             </segmentedControl>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="labelColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="nL0-Zc-7vo" secondAttribute="trailing" constant="138" id="3nR-Fn-1ja"/>
                             <constraint firstItem="nL0-Zc-7vo" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="127" id="5Qf-m1-jGp"/>
@@ -211,7 +211,7 @@
                             </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="m07-vA-42P"/>
-                        <color key="backgroundColor" systemColor="labelColor"/>
+                        <color key="backgroundColor" systemColor="systemYellowColor"/>
                         <constraints>
                             <constraint firstItem="rzt-dN-4rL" firstAttribute="top" secondItem="jvy-SU-GEd" secondAttribute="bottom" id="QE5-wI-2GS"/>
                             <constraint firstItem="Kpo-Re-ukR" firstAttribute="top" secondItem="m07-vA-42P" secondAttribute="top" id="RPO-uY-m0i"/>
@@ -227,6 +227,7 @@
                     <connections>
                         <outlet property="collectionViewDescription" destination="rzt-dN-4rL" id="9CL-JJ-br4"/>
                         <outlet property="collectionViewDetails" destination="rzt-dN-4rL" id="KJf-mg-baK"/>
+                        <outlet property="testeLabel" destination="jvy-SU-GEd" id="0EX-2a-6OS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ahd-mB-n9a" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -235,11 +236,11 @@
         </scene>
     </scenes>
     <resources>
-        <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

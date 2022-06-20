@@ -55,7 +55,12 @@ extension ViewController: UICollectionViewDataSource {
 
 extension ViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.row)
+        let x = indexPath.row
+        if x == 1 {
+        let test = ViewControllerDetails()
+        present(test, animated: true)
+        }
+
     }
 
 }
