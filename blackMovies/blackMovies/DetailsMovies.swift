@@ -7,12 +7,15 @@
 
 import UIKit
 
-struct DetailsMovies {
-    let nameActor: String
-    let imageActor: UIImage
+struct Moviee {
+    let title: String
+    let image: UIImage
 
 }
 
-let dMovies: [DetailsMovies] = [
-    DetailsMovies(nameActor: "Flash", imageActor: #imageLiteral(resourceName: "flash"))
+let moviesU: [Moviee] = [
+    Moviee(title: "Flash", image: #imageLiteral(resourceName: "flash")),
+    Moviee(title: "The Walking Dead", image: #imageLiteral(resourceName: "thewalkingdead")),
+    Moviee(title: "Homem-Aranha", image: #imageLiteral(resourceName: "homemaranha"))
 ]
+

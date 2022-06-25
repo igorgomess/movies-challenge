@@ -6,9 +6,12 @@
 //
 
 import UIKit
+
     class ViewController: UIViewController {
 
-         @IBOutlet weak var titleLabel: UILabel!
+        var movieClickedIndex: Int?
+
+        @IBOutlet weak var titleLabel: UILabel!
          @IBOutlet weak var collectionView: UICollectionView!
          @IBAction func tabsMovies(_ sender: UISegmentedControl) {
              switch sender.selectedSegmentIndex {
@@ -38,9 +41,21 @@ import UIKit
              collectionView.dataSource = self
              collectionView.delegate = self
 
+
          }
 
-     }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToNext",let destinationVc = segue.destination as? DetailsViewController {
+            guard let movieClickedIndex = movieClickedIndex else {
+                return
+            }
+
+            destinationVc.movie = movies[movieClickedIndex]
+
+        }
+    }
+
+}
 
 extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -51,17 +66,22 @@ extension ViewController: UICollectionViewDataSource {
      cell.setup(with: movies[indexPath.row])
      return cell
     }
+
 }
 
 extension ViewController: UICollectionViewDelegate {
+
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let x = indexPath.row
-        if x == 1 {
-        let test = ViewControllerDetails()
-        present(test, animated: true)
-        }
+        movieClickedIndex = indexPath.row
+
+        performSegue(withIdentifier: "goToNext", sender: self)
+
 
     }
 
+    
 }
+
+
 
