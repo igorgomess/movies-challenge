@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DetailsViewController: UIViewController {
+class DetailsViewController: UIViewController, UICollectionViewDataSource {
 
 
     @IBOutlet weak var collectionView: UICollectionView!
@@ -18,6 +18,12 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var synopsisMovie: UILabel!
 
     var movie: Movie?
+    var indexMovies: Int?
+
+
+
+
+
 
     
     override func viewDidLoad() {
@@ -26,25 +32,28 @@ class DetailsViewController: UIViewController {
         imageMovie.image = movie?.image
         nameMovie.text = movie?.title
         yearMovie.text = movie?.dateMovie
-        descriptionMovie.text = movie?.details[0].description
-        synopsisMovie.text = movie?.details[0].synopsis
-//        collectionView.dataSource = self
-        
+        descriptionMovie.text = movie?.details[indexMovies!].description
+        synopsisMovie.text = movie?.details[indexMovies!].synopsis
+        collectionView.dataSource = self
 
 
 
     }
-    
 
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return moviesUpcomig.count
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCollectionViewCell", for: indexPath) as! MovieCollectionViewCell
-//        cell.setup(with: testando[indexPath.row])
-//        return cell
-//    }
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard let movie = movie else { return 0 }
+        return movie.actors.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+
+        guard let movie = movie, let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCollectionViewCell2", for: indexPath) as? MovieCollectionViewCell else {
+            fatalError("Cell not found")
+        }
+
+        cell.actorsMovie(with: movie.actors[indexPath.row])
+        return cell
+    }
 
 }
 

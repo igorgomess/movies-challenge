@@ -20,13 +20,14 @@ class MovieCollectionViewCell: UICollectionViewCell {
         dateMovie.text = movie.dateMovie
 
     }
-//    func test (with movie: Movie){
-//        movieImageView.image = movie.image
-//        movieName.text = movie.name
-//
-//        
-//
-//    }
+    func actorsMovie (with movie: Actor){
+        movieImageView.image = movie.image
+        movieName.text = movie.name
+        dateMovie.text = movie.nameFigure
+
+
+
+    }
     override func layoutSubviews() {
         super.layoutSubviews()
         tagView.layer.borderWidth = 1

@@ -32,7 +32,7 @@ import UIKit
              }
          }
 
-         var movies: [Movie] = []
+        var movies: [Movie] = []
 
          override func viewDidLoad() {
              super.viewDidLoad()
@@ -49,9 +49,13 @@ import UIKit
             guard let movieClickedIndex = movieClickedIndex else {
                 return
             }
-
+            
             destinationVc.movie = movies[movieClickedIndex]
+            destinationVc.indexMovies = movieClickedIndex
 
+
+
+               
         }
     }
 

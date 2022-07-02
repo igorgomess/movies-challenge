@@ -38,7 +38,7 @@ struct MoviesDetails {
 
 let moviesUpcomig: [Movie] = [
     Movie(title: "Flash", dateMovie: "1997", image: #imageLiteral(resourceName: "flash"), details: details, actors:actors),
-    Movie(title: "The Walking Dead",dateMovie: "17/04/22",image: #imageLiteral(resourceName: "thewalkingdead"), details: details, actors:actors),
+    Movie(title: "The Walking Dead",dateMovie: "2019",image: #imageLiteral(resourceName: "thewalkingdead"), details: details, actors:actors),
     Movie(title: "Homem-Aranha", dateMovie: "17/04/22", image: #imageLiteral(resourceName: "homemaranha"), details: details, actors:actors),
     Movie(title: "Hotel transilvânia 4", dateMovie: "17/04/22", image: #imageLiteral(resourceName: "HotelTransylvania"), details: details, actors:actors),
     Movie(title: "Encanto", dateMovie: "17/04/22", image: #imageLiteral(resourceName: "encanto"), details: details, actors:actors),
@@ -62,6 +62,7 @@ let moviesPopular: [Movie] = [
     Movie(title: "The Boys", dateMovie: "17/04/22", image: #imageLiteral(resourceName: "theboys"), details: details, actors:actors),
     Movie(title: "Squid Game", dateMovie: "17/04/22", image: #imageLiteral(resourceName: "squidgame"), details: details, actors:actors)
 ]
+
 
 let actors = [
     Actor(name: "Peaky Blinders", image: #imageLiteral(resourceName: "peakyblinders"), nameFigure: "teste"),
