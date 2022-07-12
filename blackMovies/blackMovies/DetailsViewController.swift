@@ -9,7 +9,6 @@ import UIKit
 
 class DetailsViewController: UIViewController, UICollectionViewDataSource {
 
-
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var imageMovie: UIImageView!
     @IBOutlet weak var nameMovie: UILabel!
@@ -20,12 +19,6 @@ class DetailsViewController: UIViewController, UICollectionViewDataSource {
     var movie: Movie?
     var indexMovies: Int?
 
-
-
-
-
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -35,9 +28,6 @@ class DetailsViewController: UIViewController, UICollectionViewDataSource {
         descriptionMovie.text = movie?.details[indexMovies!].description
         synopsisMovie.text = movie?.details[indexMovies!].synopsis
         collectionView.dataSource = self
-
-
-
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -45,15 +35,13 @@ class DetailsViewController: UIViewController, UICollectionViewDataSource {
         return movie.actors.count
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
-        guard let movie = movie, let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCollectionViewCell2", for: indexPath) as? MovieCollectionViewCell else {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath)
+    -> UICollectionViewCell {
+        guard let movie = movie, let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: "MovieCollectionViewCell2", for: indexPath) as? MovieCollectionViewCell else {
             fatalError("Cell not found")
         }
-
         cell.actorsMovie(with: movie.actors[indexPath.row])
         return cell
     }
-
 }
-

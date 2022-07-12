@@ -13,21 +13,20 @@ class MovieCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var movieName: UILabel!
     @IBOutlet weak var dateMovie: UILabel!
     @IBOutlet weak var movieImageView: UIImageView!
-    
-    func setup(with movie: Movie){
+
+    func setup(with movie: Movie) {
         movieImageView.image = movie.image
         movieName.text = movie.title
         dateMovie.text = movie.dateMovie
 
     }
-    func actorsMovie (with movie: Actor){
+
+    func actorsMovie (with movie: Actor) {
         movieImageView.image = movie.image
         movieName.text = movie.name
         dateMovie.text = movie.nameFigure
-
-
-
     }
+
     override func layoutSubviews() {
         super.layoutSubviews()
         tagView.layer.borderWidth = 1

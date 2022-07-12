@@ -18,4 +18,3 @@ let moviesU: [Moviee] = [
     Moviee(title: "The Walking Dead", image: #imageLiteral(resourceName: "thewalkingdead")),
     Moviee(title: "Homem-Aranha", image: #imageLiteral(resourceName: "homemaranha"))
 ]
-
