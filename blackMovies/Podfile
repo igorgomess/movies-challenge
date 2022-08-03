@@ -6,6 +6,7 @@ target 'blackMovies' do
   use_frameworks!
 
   # Pods for blackMovies
+  # pod 'Moya', '~> 15.0'
 
   target 'blackMoviesTests' do
     inherit! :search_paths

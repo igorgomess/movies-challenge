@@ -1,0 +1,36 @@
+
+/* Class = "UIViewController"; title = "DetailsViewController"; ObjectID = "1FS-sG-hjj"; */
+"1FS-sG-hjj.title" = "DetailsViewController";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "DWi-YU-Q3M"; */
+"DWi-YU-Q3M.text" = "Label";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "FWe-zU-NF7"; */
+"FWe-zU-NF7.text" = "Title";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "QEA-hD-g0A"; */
+"QEA-hD-g0A.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "all-hT-Bip"; */
+"all-hT-Bip.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "ciq-nv-kXg"; */
+"ciq-nv-kXg.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "deN-PH-M8D"; */
+"deN-PH-M8D.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "mBS-py-SDR"; */
+"mBS-py-SDR.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "miy-NC-AsR"; */
+"miy-NC-AsR.text" = "Label";
+
+/* Class = "UISegmentedControl"; nL0-Zc-7vo.segmentTitles[0] = "Upcomig"; ObjectID = "nL0-Zc-7vo"; */
+"nL0-Zc-7vo.segmentTitles[0]" = "Upcomig";
+
+/* Class = "UISegmentedControl"; nL0-Zc-7vo.segmentTitles[1] = "Popular"; ObjectID = "nL0-Zc-7vo"; */
+"nL0-Zc-7vo.segmentTitles[1]" = "Popular";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "oVw-3j-Ptx"; */
+"oVw-3j-Ptx.text" = "Label";

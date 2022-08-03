@@ -16,11 +16,9 @@ import UIKit
         @IBAction func tabsMovies(_ sender: UISegmentedControl) {
             switch sender.selectedSegmentIndex {
             case 0:
-                 movies = moviesUpcomig
                  collectionView.reloadData()
                  titleLabel.text = "Upcomig Movies"
             case 1:
-                 movies = moviesPopular
                  collectionView.reloadData()
                  titleLabel.text = "Popular Movies"
             default:
@@ -32,10 +30,13 @@ import UIKit
 
          override func viewDidLoad() {
              super.viewDidLoad()
-             movies = moviesUpcomig
-             titleLabel.text = "Upcomig Movies"
+             titleLabel.text = NSLocalizedString("upcomig_movies", comment: String())
              collectionView.dataSource = self
              collectionView.delegate = self
+             BlackMovieAPI.makeRequest { responseMovie in
+                 self.movies = responseMovie.results
+                 self.collectionView.reloadData()
+             }
          }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -44,7 +45,7 @@ import UIKit
                 return
             }
             destinationVc.movie = movies[movieClickedIndex]
-            destinationVc.indexMovies = movieClickedIndex
+            destinationVc.indexMovies = movies[movieClickedIndex].id
         }
     }
 
@@ -63,7 +64,8 @@ extension ViewController: UICollectionViewDataSource {
             for: indexPath) as? MovieCollectionViewCell else {
            return UICollectionViewCell()
        }
-     cell.setup(with: movies[indexPath.row])
+        cell.setup(with: movies[indexPath.row])
+
      return cell
     }
 
