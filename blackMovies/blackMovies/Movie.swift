@@ -7,36 +7,53 @@
 
 import UIKit
 
-struct Movie {
-    let title: String
-    let dateMovie: String
-    let image: UIImage
-
+struct ResponseMovie: Decodable {
+    let page: Int
+    let results: [Movie]
 }
 
-let moviesUpcomig: [Movie] = [
-    Movie(title: "Flash", dateMovie: "17/04/22", image: #imageLiteral(resourceName: "flash")),
-    Movie(title: "The Walking Dead", dateMovie: "17/04/22", image: #imageLiteral(resourceName: "thewalkingdead")),
-    Movie(title: "Homem-Aranha", dateMovie: "17/04/22", image: #imageLiteral(resourceName: "homemaranha")),
-    Movie(title: "Hotel transilvânia 4", dateMovie: "17/04/22", image: #imageLiteral(resourceName: "HotelTransylvania")),
-    Movie(title: "Encanto", dateMovie: "17/04/22", image: #imageLiteral(resourceName: "encanto")),
-    Movie(title: "Game Of Thrones", dateMovie: "17/04/22", image: #imageLiteral(resourceName: "got")),
-    Movie(title: "Halo", dateMovie: "17/04/22", image: #imageLiteral(resourceName: "halo")),
-    Movie(title: "Startrek", dateMovie: "17/04/22", image: #imageLiteral(resourceName: "startrek")),
-    Movie(title: "Uncharted", dateMovie: "17/04/22", image: #imageLiteral(resourceName: "uncharted")),
-    Movie(title: "Greys Anatomy", dateMovie: "17/04/22", image: #imageLiteral(resourceName: "greysanatomy")),
-    Movie(title: "Morbius", dateMovie: "17/04/22", image: #imageLiteral(resourceName: "morbius")),
-    Movie(title: "Turning Red", dateMovie: "17/04/22", image: #imageLiteral(resourceName: "turninred"))
-]
+struct Movie: Decodable {
+    let id: Int
+    let title: String
+    let releaseDate: String
+    let posterPath: String
 
-let moviesPopular: [Movie] = [
-    Movie(title: "Peaky Blinders", dateMovie: "17/04/22", image: #imageLiteral(resourceName: "peakyblinders")),
-    Movie(title: "Stranger Things", dateMovie: "17/04/22", image: #imageLiteral(resourceName: "strangerthings")),
-    Movie(title: "Ms. Marvel", dateMovie: "17/04/22", image: #imageLiteral(resourceName: "msmarvel")),
-    Movie(title: "Prehistoric Planet", dateMovie: "17/04/22", image: #imageLiteral(resourceName: "prehistoricplanet")),
-    Movie(title: "Doctor Strange", dateMovie: "17/04/22", image: #imageLiteral(resourceName: "doctorstrange")),
-    Movie(title: "This Is Us", dateMovie: "17/04/22", image: #imageLiteral(resourceName: "thisisus")),
-    Movie(title: "The Expendables 2", dateMovie: "17/04/22", image: #imageLiteral(resourceName: "theexpendables")),
-    Movie(title: "The Boys", dateMovie: "17/04/22", image: #imageLiteral(resourceName: "theboys")),
-    Movie(title: "Squid Game", dateMovie: "17/04/22", image: #imageLiteral(resourceName: "squidgame"))
-]
+    enum CodingKeys: String, CodingKey {
+        case id
+        case title
+        case releaseDate = "release_date"
+        case posterPath = "poster_path"
+    }
+}
+
+struct ResponseDetails: Decodable {
+    let originalTitle: String
+    let overview: String
+    let releaseDate: String
+    let tagline: String
+    let backDropPath: String
+
+    enum CodingKeys: String, CodingKey {
+        case originalTitle = "original_title"
+        case overview
+        case releaseDate = "release_date"
+        case tagline
+        case backDropPath = "backdrop_path"
+    }
+}
+
+struct ResponseActors: Decodable {
+    let cast: [ActorsMovie]
+}
+
+struct ActorsMovie: Decodable {
+    let name: String
+    let profilePath: String?
+    let character: String
+
+    enum CodingKeys: String, CodingKey {
+        case name
+        case profilePath = "profile_path"
+        case character
+    }
+}
