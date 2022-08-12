@@ -8,7 +8,7 @@
 import UIKit
 
 struct ResponseMovie: Decodable {
-    let page: Int
+    var page = 1
     let results: [Movie]
 }
 
@@ -23,6 +23,16 @@ struct Movie: Decodable {
         case title
         case releaseDate = "release_date"
         case posterPath = "poster_path"
+    }
+
+    func getRealeaseDate() -> String {
+        let dataReversed = releaseDate.split(separator: "-").reversed()
+        var realaseDate = String()
+        for dataElement in dataReversed {
+            realaseDate += "\(dataElement)-"
+        }
+        let convertDate = realaseDate.trimmingCharacters(in: CharacterSet(charactersIn: "-"))
+        return convertDate
     }
 }
 

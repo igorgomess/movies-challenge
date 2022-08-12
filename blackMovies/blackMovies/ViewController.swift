@@ -7,37 +7,39 @@
 
 import UIKit
 
-    class ViewController: UIViewController {
+class ViewController: UIViewController {
 
-        var movieClickedIndex: Int?
+    var movieClickedIndex: Int?
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBAction func tabsMovies(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            collectionView.reloadData()
+            titleLabel.text = "Upcomig Movies"
+        case 1:
+            collectionView.reloadData()
+            titleLabel.text = "Popular Movies"
+        default:
+            break
+        }
+    }
 
-        @IBOutlet weak var titleLabel: UILabel!
-        @IBOutlet weak var collectionView: UICollectionView!
-        @IBAction func tabsMovies(_ sender: UISegmentedControl) {
-            switch sender.selectedSegmentIndex {
-            case 0:
-                 collectionView.reloadData()
-                 titleLabel.text = "Upcomig Movies"
-            case 1:
-                 collectionView.reloadData()
-                 titleLabel.text = "Popular Movies"
-            default:
-                 break
-            }
-         }
+    var movies: [Movie] = []
+    var pageIndex = 1
+    var index = 0
 
-        var movies: [Movie] = []
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        titleLabel.text = NSLocalizedString("upcomig_movies", comment: String())
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        BlackMovieAPI.makeRequest(page: pageIndex) { responseMovie in
+            self.movies.append(contentsOf: responseMovie.results)
+            self.collectionView.reloadData()
+        }
+    }
 
-         override func viewDidLoad() {
-             super.viewDidLoad()
-             titleLabel.text = NSLocalizedString("upcomig_movies", comment: String())
-             collectionView.dataSource = self
-             collectionView.delegate = self
-             BlackMovieAPI.makeRequest { responseMovie in
-                 self.movies = responseMovie.results
-                 self.collectionView.reloadData()
-             }
-         }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToNext", let destinationVc = segue.destination as? DetailsViewController {
@@ -53,20 +55,20 @@ import UIKit
 
 extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-         return movies.count
+        return movies.count
     }
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-       guard let cell = collectionView.dequeueReusableCell(
+        guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: "MovieCollectionViewCell",
             for: indexPath) as? MovieCollectionViewCell else {
-           return UICollectionViewCell()
-       }
+            return UICollectionViewCell()
+        }
         cell.setup(with: movies[indexPath.row])
 
-     return cell
+        return cell
     }
 
 }
@@ -79,5 +81,15 @@ extension ViewController: UICollectionViewDelegate {
         performSegue(withIdentifier: "goToNext", sender: self)
 
     }
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.row == movies.count-1 {
+            pageIndex += 1
+            BlackMovieAPI.makeRequest(page: pageIndex) { responseMovie in
+                self.movies.append(contentsOf: responseMovie.results)
+                self.collectionView.reloadData()
+            }
 
+        }
+    }
 }
+//        0 == 0 ? print("oa") : print("ka")

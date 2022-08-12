@@ -9,10 +9,10 @@ import Foundation
 
 class BlackMovieAPI {
 
-    static func makeRequest (completion: @escaping (ResponseMovie) -> Void) {
+    static func makeRequest (page: Int, completion: @escaping (ResponseMovie) -> Void) {
         guard let url =
         URL(string:
-                "https://api.themoviedb.org/3/movie/popular?api_key=5f8f1412c293dc5178cd7de381ef1459")
+                "https://api.themoviedb.org/3/movie/popular?api_key=5f8f1412c293dc5178cd7de381ef1459&page=\(page)")
         else { return }
         URLSession.shared.dataTask(with: url) { (data, _, error) in
             guard error == nil else {
@@ -25,10 +25,9 @@ class BlackMovieAPI {
             }
             do {
                 let movie = try JSONDecoder().decode(ResponseMovie.self, from: data)
-                
                 DispatchQueue.main.async { completion(movie) }
 
-            } catch (let error) {
+            } catch(let error) {
                 print(error.localizedDescription)
             }
         }.resume()
@@ -75,7 +74,6 @@ class BlackMovieAPI {
             }
             do {
                 let actorsMovie = try JSONDecoder().decode(ResponseActors.self, from: data)
-                print(actorsMovie)
                 DispatchQueue.main.async { completionActors(actorsMovie) }
             } catch (let error) {
                 print(error.localizedDescription)
