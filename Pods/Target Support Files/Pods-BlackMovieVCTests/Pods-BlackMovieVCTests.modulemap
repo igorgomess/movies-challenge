@@ -1,0 +1,6 @@
+framework module Pods_BlackMovieVCTests {
+  umbrella header "Pods-BlackMovieVCTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

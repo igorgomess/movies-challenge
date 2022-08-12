@@ -1,0 +1,6 @@
+framework module Pods_BlackMovieVC {
+  umbrella header "Pods-BlackMovieVC-umbrella.h"
+
+  export *
+  module * { export * }
+}
