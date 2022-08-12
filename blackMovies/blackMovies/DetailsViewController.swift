@@ -36,7 +36,6 @@ class DetailsViewController: UIViewController, UICollectionViewDataSource {
         })
 
         BlackMovieAPI.makeRequestActorsMovie(idMovies: indexMovies) { responseActors in
-            print(responseActors)
             self.actorsMovie = responseActors.cast
             self.collectionView.reloadData()
         }
