@@ -32,13 +32,12 @@ class MovieCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var movieName: UILabel!
     @IBOutlet weak var dateMovie: UILabel!
     @IBOutlet weak var movieImageView: UIImageView!
-
     func setup(with movie: Movie) {
         guard let url = URL(string: "https://image.tmdb.org/t/p/w500\(movie.posterPath)")
         else { return }
         movieImageView.setImage(url: url)
         movieName.text = movie.title
-        dateMovie.text = movie.releaseDate
+        dateMovie.text = movie.getRealeaseDate()
     }
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -47,7 +46,8 @@ class MovieCollectionViewCell: UICollectionViewCell {
     func actorMovie (with movie: ActorsMovie) {
         movieName.text = movie.name
         dateMovie.text = movie.character
-        guard let url = URL(string: "https://image.tmdb.org/t/p/w500\(movie.profilePath)")
+        guard let profilePath = movie.profilePath,
+              let url = URL(string: "https://image.tmdb.org/t/p/w500\(profilePath)")
         else { return }
         movieImageView.setImage(url: url)
     }

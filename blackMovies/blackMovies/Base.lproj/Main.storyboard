@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Movie View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="blackMovies" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MovieViewController" customModule="blackMovies" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -39,8 +39,8 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eW6-6P-yx1">
                                                     <rect key="frame" x="0.0" y="194.5" width="140" height="22.5"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="deN-PH-M8D">
-                                                            <rect key="frame" x="53" y="-2" width="34" height="19.5"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="deN-PH-M8D">
+                                                            <rect key="frame" x="0.0" y="3" width="140" height="19.5"/>
                                                             <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="14"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -48,6 +48,8 @@
                                                     </subviews>
                                                     <constraints>
                                                         <constraint firstAttribute="bottom" secondItem="deN-PH-M8D" secondAttribute="bottom" id="J7i-4e-X9C"/>
+                                                        <constraint firstItem="deN-PH-M8D" firstAttribute="leading" secondItem="eW6-6P-yx1" secondAttribute="leading" id="fpI-nm-wNJ"/>
+                                                        <constraint firstAttribute="trailing" secondItem="deN-PH-M8D" secondAttribute="trailing" id="hdd-zE-mdn"/>
                                                         <constraint firstItem="deN-PH-M8D" firstAttribute="centerX" secondItem="eW6-6P-yx1" secondAttribute="centerX" id="kI9-kv-UpK"/>
                                                         <constraint firstItem="deN-PH-M8D" firstAttribute="top" secondItem="eW6-6P-yx1" secondAttribute="top" constant="3" id="vvr-qS-wrT"/>
                                                     </constraints>
