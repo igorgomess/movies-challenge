@@ -7,28 +7,38 @@
 
 import Foundation
 
-class BlackMovieAPI {
+enum Error: Swift.Error {
+    case dataNotFound
+    case urlError
+    case errorNil
+    case decodeError
+}
+class MovieService {
 
-    static func makeRequest (page: Int, completion: @escaping (ResponseMovie) -> Void) {
+    static func makeRequest (page: Int, completion: @escaping (Result<ResponseMovie,Error>) -> Void) {
         guard let url =
         URL(string:
                 "https://api.themoviedb.org/3/movie/popular?api_key=5f8f1412c293dc5178cd7de381ef1459&page=\(page)")
-        else { return }
+        else {
+            print(completion(.failure(.urlError)))
+            return
+
+        }
         URLSession.shared.dataTask(with: url) { (data, _, error) in
             guard error == nil else {
-                print(error!)
+                print(completion(.failure(.errorNil)))
                 return
             }
             guard let data = data else {
-                print("data error")
+                print(completion(.failure(.dataNotFound)))
                 return
             }
             do {
                 let movie = try JSONDecoder().decode(ResponseMovie.self, from: data)
-                DispatchQueue.main.async { completion(movie) }
+                DispatchQueue.main.async { completion(.success(movie)) }
 
-            } catch(let error) {
-                print(error.localizedDescription)
+            } catch {
+                print(completion(.failure(.decodeError)))
             }
         }.resume()
     }
@@ -38,6 +48,7 @@ class BlackMovieAPI {
         URL(string:
                 "https://api.themoviedb.org/3/movie/\(idMovies)?api_key=5f8f1412c293dc5178cd7de381ef1459")
         else { return }
+        print(idMovies)
         URLSession.shared.dataTask(with: url) { (data, _, error) in
             guard error == nil else {
                 print(error!)
@@ -80,4 +91,6 @@ class BlackMovieAPI {
             }
         }.resume()
     }
+
+
 }

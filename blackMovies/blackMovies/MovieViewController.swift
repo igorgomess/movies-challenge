@@ -7,9 +7,11 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
+class MovieViewController: UIViewController {
+    let viewModel = MovieViewModel()
     var movieClickedIndex: Int?
+    var movies: [Movie] = []
+
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBAction func tabsMovies(_ sender: UISegmentedControl) {
@@ -25,35 +27,32 @@ class ViewController: UIViewController {
         }
     }
 
-    var movies: [Movie] = []
-    var pageIndex = 1
-    var index = 0
-
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.viewController = self
         titleLabel.text = NSLocalizedString("upcomig_movies", comment: String())
         collectionView.dataSource = self
         collectionView.delegate = self
-        BlackMovieAPI.makeRequest(page: pageIndex) { responseMovie in
-            self.movies.append(contentsOf: responseMovie.results)
-            self.collectionView.reloadData()
-        }
+        viewModel.featchMovie()
     }
-
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToNext", let destinationVc = segue.destination as? DetailsViewController {
             guard let movieClickedIndex = movieClickedIndex else {
                 return
             }
-            destinationVc.movie = movies[movieClickedIndex]
-            destinationVc.indexMovies = movies[movieClickedIndex].id
+            destinationVc.detailsViewModel.movie = movies[movieClickedIndex]
+            destinationVc.detailsViewModel.indexMovies = movies[movieClickedIndex].id
         }
     }
+    func display(movies: [Movie]) {
+        self.movies.append(contentsOf: movies)
+        collectionView.reloadData()
 
+    }
 }
 
-extension ViewController: UICollectionViewDataSource {
+extension MovieViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return movies.count
     }
@@ -67,13 +66,12 @@ extension ViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         cell.setup(with: movies[indexPath.row])
-
         return cell
     }
 
 }
 
-extension ViewController: UICollectionViewDelegate {
+extension MovieViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         movieClickedIndex = indexPath.row
@@ -81,14 +79,12 @@ extension ViewController: UICollectionViewDelegate {
         performSegue(withIdentifier: "goToNext", sender: self)
 
     }
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell,
+                        forItemAt indexPath: IndexPath
+    ) {
         if indexPath.row == movies.count-1 {
-            pageIndex += 1
-            BlackMovieAPI.makeRequest(page: pageIndex) { responseMovie in
-                self.movies.append(contentsOf: responseMovie.results)
-                self.collectionView.reloadData()
-            }
-
+            viewModel.appendMovie()
+            self.collectionView.reloadData()
         }
     }
 }
