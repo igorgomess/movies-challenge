@@ -1,3 +1,5 @@
+import UIKit
+
 struct ResponseMovies: Decodable {
     var page = 1
     let results: [Movies]
@@ -30,6 +32,15 @@ struct ResponseDetailsMovie: Decodable {
         case releaseDate = "release_date"
         case tagline
         case backDropPath = "backdrop_path"
+    }
+    func getRealeaseDate() -> String {
+        let dataReversed = releaseDate.split(separator: "-").reversed()
+        var realaseDate = String()
+        for dataElement in dataReversed {
+            realaseDate += "\(dataElement)-"
+        }
+        let convertDate = realaseDate.trimmingCharacters(in: CharacterSet(charactersIn: "-"))
+        return convertDate
     }
 }
 

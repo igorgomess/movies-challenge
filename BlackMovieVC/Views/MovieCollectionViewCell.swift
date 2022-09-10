@@ -19,7 +19,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
     let nameMovie: UILabel = {
         let labelMovie = UILabel()
         labelMovie.textColor = .gray
-        labelMovie.numberOfLines = 2
+        labelMovie.numberOfLines = 1
         labelMovie.font = UIFont.systemFont(ofSize: 18)
         labelMovie.translatesAutoresizingMaskIntoConstraints = false
         return labelMovie

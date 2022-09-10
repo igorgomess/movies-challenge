@@ -1,33 +1,32 @@
 import UIKit
 
 class DetailsViewController: UIViewController {
+
     var actors = [ActorsMovie]()
     var DetailsviewModel = DetailsViewModel()
+    let idMovie: Int
+    
     let imageMovie: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named:"doctorstrange")
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
 
     let nameMovie: UILabel = {
         let nameMovie = UILabel()
-        nameMovie.textColor = .black
-        nameMovie.text = "nameMovie"
+        nameMovie.textColor = .gray
         nameMovie.translatesAutoresizingMaskIntoConstraints = false
         return nameMovie
     }()
     let yearMovie: UILabel = {
         let yearMovie = UILabel()
-        yearMovie.textColor = .black
-        yearMovie.text = "yearMovie"
+        yearMovie.textColor = .gray
         yearMovie.translatesAutoresizingMaskIntoConstraints = false
         return yearMovie
     }()
     let categoryMovie: UILabel = {
         let categoryMovie = UILabel()
-        categoryMovie.textColor = .black
-        categoryMovie.text = "categoryMovie"
+        categoryMovie.textColor = .gray
         categoryMovie.translatesAutoresizingMaskIntoConstraints = false
         return categoryMovie
     }()
@@ -36,7 +35,7 @@ class DetailsViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout)
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.backgroundColor = .black
+        collectionView.backgroundColor = .none
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(
             DetailsCollectionViewCell.self, forCellWithReuseIdentifier: DetailsCollectionViewCell.idenfier
@@ -47,15 +46,15 @@ class DetailsViewController: UIViewController {
     lazy var collectionViewFlowLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        let numberCellHorizontal: CGFloat = 3
+        let numberCellHorizontal: CGFloat = 2
 
-        let spacingItemHorizontal: CGFloat = 8
+        let spacingItemVertical: CGFloat = 4
         let lineSpacingNumber = numberCellHorizontal - 1
 
-        let itemWidth = (UIScreen.main.bounds.width - (spacingItemHorizontal * lineSpacingNumber) )/numberCellHorizontal - 10.6
-        layout.itemSize = CGSize(width: itemWidth, height: 40)
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = spacingItemHorizontal
+        let itemWidth = (UIScreen.main.bounds.width - (spacingItemVertical * lineSpacingNumber) )/numberCellHorizontal - 83
+        layout.itemSize = CGSize(width: itemWidth, height: 230)
+        layout.minimumLineSpacing = 5
+        layout.minimumInteritemSpacing = spacingItemVertical
         layout.collectionView?.backgroundColor = .black
 
         return layout
@@ -63,17 +62,15 @@ class DetailsViewController: UIViewController {
 
     let synopsisMovie: UILabel = {
         let synopsisMovie = UILabel()
-        synopsisMovie.backgroundColor = .yellow
-        synopsisMovie.textColor = .black
-        synopsisMovie.text = "synopsisMovie"
+        synopsisMovie.textColor = .gray
+        synopsisMovie.numberOfLines = 10
         synopsisMovie.translatesAutoresizingMaskIntoConstraints = false
         return synopsisMovie
     }()
 
     override func loadView() {
         let view = UIView()
-        view.backgroundColor = .white
-
+        view.backgroundColor = .black
         self.view = view
     }
 
@@ -81,9 +78,11 @@ class DetailsViewController: UIViewController {
         super.viewDidLoad()
         configConstraints()
         DetailsviewModel.detailsViewController = self
-        DetailsviewModel.fetchActor()
+        DetailsviewModel.fetchActor(idMovie: idMovie)
+        DetailsviewModel.fetchDetailsMovie(idMovie: idMovie)
     }
-    init () {
+    init (idMovie: Int) {
+        self.idMovie = idMovie
         super .init(nibName: nil, bundle: nil)
         configConstraints()
         setupConstraints()
@@ -93,12 +92,25 @@ class DetailsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func displayMovie(actors: [ActorsMovie]) {
+    func displayActorsMovie(actors: [ActorsMovie]) {
         DispatchQueue.main.async {
             self.actors = actors
             self.collectionViewActors.reloadData()
         }
     }
+
+    func showDetailsMovie(detailsMovie: ResponseDetailsMovie){
+        guard let url = URL(string: "https://image.tmdb.org/t/p/w500\(detailsMovie.backDropPath)")
+        else { return }
+        DispatchQueue.main.async {
+            self.imageMovie.setImage(url: url)
+            self.nameMovie.text = detailsMovie.originalTitle
+            self.yearMovie.text = detailsMovie.getRealeaseDate()
+            self.categoryMovie.text = detailsMovie.tagline
+            self.synopsisMovie.text = detailsMovie.overview
+        }
+    }
+
     func showError(error: Error) {
         DispatchQueue.main.async {
             let alert = UIAlertController(title: "Ops, ocorreu um erro", message: error.localizedDescription, preferredStyle: .alert)
@@ -108,9 +120,11 @@ class DetailsViewController: UIViewController {
     }
 
 
+
 }
 
 extension DetailsViewController {
+
     private func configConstraints() {
         view.addSubview(imageMovie)
         view.addSubview(nameMovie)
@@ -122,34 +136,37 @@ extension DetailsViewController {
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            imageMovie.widthAnchor.constraint(equalToConstant: 420),
-            imageMovie.heightAnchor.constraint(equalToConstant: 470),
+            imageMovie.leftAnchor.constraint(equalTo: view.leftAnchor),
+            imageMovie.rightAnchor.constraint(equalTo: view.rightAnchor),
+            imageMovie.topAnchor.constraint(equalTo: view.topAnchor),
+            imageMovie.heightAnchor.constraint(equalToConstant: 300),
 
             nameMovie.topAnchor.constraint(equalTo: imageMovie.bottomAnchor),
             nameMovie.leftAnchor.constraint(equalTo: view.leftAnchor),
 
             yearMovie.topAnchor.constraint(equalTo: imageMovie.bottomAnchor),
-            yearMovie.leftAnchor.constraint(equalTo: nameMovie.rightAnchor),
-            yearMovie.rightAnchor.constraint(equalTo: view.rightAnchor),
+            yearMovie.leftAnchor.constraint(equalTo: nameMovie.rightAnchor, constant: 12),
+            yearMovie.rightAnchor.constraint(lessThanOrEqualTo: view.rightAnchor),
 
-            categoryMovie.topAnchor.constraint(equalTo: nameMovie.bottomAnchor),
+            categoryMovie.topAnchor.constraint(equalTo: nameMovie.bottomAnchor, constant: 8),
             categoryMovie.rightAnchor.constraint(equalTo: view.rightAnchor),
             categoryMovie.leftAnchor.constraint(equalTo: view.leftAnchor),
-            categoryMovie.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,constant: -300),
 
             collectionViewActors.topAnchor.constraint(equalTo: categoryMovie.bottomAnchor),
+            collectionViewActors.heightAnchor.constraint(equalToConstant: 250),
             collectionViewActors.leftAnchor.constraint(equalTo: view.leftAnchor ),
             collectionViewActors.rightAnchor.constraint(equalTo: view.rightAnchor),
 
             synopsisMovie.topAnchor.constraint(equalTo: collectionViewActors.bottomAnchor),
             synopsisMovie.leftAnchor.constraint(equalTo: view.leftAnchor),
             synopsisMovie.rightAnchor.constraint(equalTo: view.rightAnchor),
-            synopsisMovie.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 
 }
+
 extension DetailsViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return actors.count
     }
@@ -160,15 +177,10 @@ extension DetailsViewController: UICollectionViewDataSource, UICollectionViewDel
             for: indexPath) as? DetailsCollectionViewCell else {
             return UICollectionViewCell()
         }
-        let actors = actors[indexPath.row]
-        cell.nameActor.text = actors.name
-        guard let actorsPath = actors.profilePath else {
-            return UICollectionViewCell()
-        }
-        guard let url = URL(string: "https://image.tmdb.org/t/p/w500\(actorsPath)") else {
-            return UICollectionViewCell()
-        }
-        cell.imageActor.setImage(url: url)
+        let actorMovie = actors[indexPath.row]
+        let image = "https://image.tmdb.org/t/p/w500\(actorMovie.profilePath ?? "")"
+        let viewModel = DetailsCollectionViewCell.ViewModel(imageURL: image, text: actorMovie.name)
+        cell.setup(viewModel: viewModel)
         return cell
     }
     

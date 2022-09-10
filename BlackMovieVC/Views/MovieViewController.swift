@@ -1,7 +1,6 @@
 import UIKit
 
 class ViewController: UIViewController {
-    var movieClickedIndex: Int?
 
     let segmentedControl: UISegmentedControl = {
         let segmentedControl = UISegmentedControl (items: ["Upcoming", "Popular"])
@@ -93,13 +92,11 @@ class ViewController: UIViewController {
         ])
     }
 
-    @objc private func showDetailViewController() {
-        let rootViewController = DetailsViewController()
+    @objc private func showDetailViewController(idMovie: Int) {
+        let rootViewController = DetailsViewController(idMovie: idMovie)
         let navigationController = UINavigationController(rootViewController: rootViewController)
 
         show(navigationController, sender: nil)
-
-
     }
     func displayMovie(movies: [Movies]) {
         DispatchQueue.main.async {
@@ -144,8 +141,8 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFl
 }
 extension ViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        movieClickedIndex = indexPath.row
-        showDetailViewController()
+        let movie = movies[indexPath.row]
+        showDetailViewController(idMovie: movie.id)
     }
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell,
@@ -161,6 +158,7 @@ extension UIImageView {
     func setImage(url: URL?) {
         DispatchQueue.global().async { [weak self] in
             guard let url = url, let data = try? Data(contentsOf: url) else {
+
                 return
             }
             guard let image = UIImage(data: data) else {

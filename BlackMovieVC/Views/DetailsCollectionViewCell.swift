@@ -8,7 +8,10 @@
 import UIKit
 
 class DetailsCollectionViewCell: UICollectionViewCell {
-
+    struct ViewModel {
+        let imageURL: String
+        let text: String
+    }
     static let idenfier: String = "DetailsCollectionViewCell"
 
     let imageActor: UIImageView = {
@@ -18,8 +21,8 @@ class DetailsCollectionViewCell: UICollectionViewCell {
     }()
     let nameActor: UILabel = {
         let nameActor = UILabel()
-        nameActor.textColor = .white
-        nameActor.numberOfLines = 2
+        nameActor.textColor = .gray
+        nameActor.numberOfLines = 1
         nameActor.font = UIFont.systemFont(ofSize: 18)
         nameActor.translatesAutoresizingMaskIntoConstraints = false
         return nameActor
@@ -48,13 +51,21 @@ class DetailsCollectionViewCell: UICollectionViewCell {
             imageActor.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageActor.rightAnchor.constraint(equalTo: contentView.rightAnchor),
             imageActor.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+
             nameActor.topAnchor.constraint(equalTo: imageActor.bottomAnchor, constant: 8),
-            nameActor.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            nameActor.rightAnchor.constraint(lessThanOrEqualTo: contentView.rightAnchor, constant: 4),
             nameActor.leftAnchor.constraint(equalTo: contentView.leftAnchor),
             nameActor.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
         nameActor.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         imageActor.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
     }
-
+    func setup(viewModel: ViewModel) {
+        if let url = URL(string: viewModel.imageURL) {
+            imageActor.setImage(url: url)
+        } else {
+            imageActor.image = UIImage(named: "no-image")
+        }
+        nameActor.text = viewModel.text
+    }
 }
