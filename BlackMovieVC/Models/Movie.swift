@@ -25,7 +25,7 @@ struct ResponseDetailsMovie: Decodable {
     let releaseDate: String
     let tagline: String
     let backDropPath: String
-
+    
     enum CodingKeys: String, CodingKey {
         case originalTitle = "original_title"
         case overview
@@ -33,14 +33,17 @@ struct ResponseDetailsMovie: Decodable {
         case tagline
         case backDropPath = "backdrop_path"
     }
+    
     func getRealeaseDate() -> String {
-        let dataReversed = releaseDate.split(separator: "-").reversed()
-        var realaseDate = String()
-        for dataElement in dataReversed {
-            realaseDate += "\(dataElement)-"
-        }
-        let convertDate = realaseDate.trimmingCharacters(in: CharacterSet(charactersIn: "-"))
-        return convertDate
+        let dateFormatterGet = DateFormatter()
+        dateFormatterGet.dateFormat = "yyyy-MM-dd"
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = "yyyy"
+        
+        guard let date = dateFormatterGet.date(from: self.releaseDate) else { return releaseDate }
+        let dateString = dateFormatterPrint.string(from: date)
+        
+        return dateString
     }
 }
 
