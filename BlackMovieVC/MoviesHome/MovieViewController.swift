@@ -4,7 +4,7 @@ class ViewController: UIViewController {
     
     let segmentedControl: UISegmentedControl = {
         let segmentedControl = UISegmentedControl (items: ["Upcoming", "Popular"])
-        segmentedControl.backgroundColor = .black
+        segmentedControl.backgroundColor = .darkGray
         segmentedControl.selectedSegmentIndex = 1
         segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: UIControl.State.selected)
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
@@ -52,17 +52,18 @@ class ViewController: UIViewController {
     
     var movies = [Movies]()
     var viewModel = MovieViewModel()
+    private let interactor: MoviesInteractor
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViewHierarchy()
         viewModel.viewController = self
-        viewModel.fetchMovie()
-        //        getPopularMovie(movies: movies)
+        viewModel.fetchMovie(getPage: true)
     }
     
-    
-    init () {
+    init (interactor: MoviesInteractor) {
+        self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
         setupConstraints()
         setupViewHierarchy()
@@ -101,7 +102,7 @@ class ViewController: UIViewController {
         
         show(navigationController, sender: nil)
     }
-    func displayMovie(movies: [Movies]) {
+    func display(movies: [Movies]) {
         DispatchQueue.main.async {
             self.movies = movies
             self.collectionViewMovie.reloadData()
@@ -109,9 +110,9 @@ class ViewController: UIViewController {
         
         
     }
-    func showError(error: Error) {
+    func show(error: String) {
         DispatchQueue.main.async {
-            let alert = UIAlertController(title: "Ops, ocorreu um erro", message: error.localizedDescription, preferredStyle: .alert)
+            let alert = UIAlertController(title: "Ops, ocorreu um erro", message: error, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true)
         }
@@ -124,7 +125,7 @@ class ViewController: UIViewController {
             viewModel.getMoviesFilter()
         case 1:
             labelTitle.text = "Popular Movies"
-            viewModel.fetchMovie()
+            viewModel.fetchMovie(getPage: false)
         default:
             break
         }
@@ -167,7 +168,7 @@ extension ViewController: UICollectionViewDelegate {
                         forItemAt indexPath: IndexPath
     ) {
         if indexPath.row == movies.count-1, segmentedControl.selectedSegmentIndex == 1 {
-            viewModel.fetchMovie()
+            viewModel.fetchMovie(getPage: true)
         }
     }
 }
