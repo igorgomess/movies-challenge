@@ -1,5 +1,11 @@
 import UIKit
 
+protocol DisplayLogic {
+    func display(movies: [Movies])
+    func show(error: String)
+    
+}
+
 class ViewController: UIViewController {
     
     let segmentedControl: UISegmentedControl = {
@@ -51,18 +57,16 @@ class ViewController: UIViewController {
     }()
     
     var movies = [Movies]()
-    var viewModel = MovieViewModel()
-    private let interactor: MoviesInteractor
+    private let interactor: MoviesBusinessLogic
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViewHierarchy()
-        viewModel.viewController = self
-        viewModel.fetchMovie(getPage: true)
+        interactor.fetchMovie(getPage: true)
     }
     
-    init (interactor: MoviesInteractor) {
+    init (interactor: MoviesBusinessLogic) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
         setupConstraints()
@@ -102,6 +106,7 @@ class ViewController: UIViewController {
         
         show(navigationController, sender: nil)
     }
+    
     func display(movies: [Movies]) {
         DispatchQueue.main.async {
             self.movies = movies
@@ -122,10 +127,10 @@ class ViewController: UIViewController {
         switch sender.selectedSegmentIndex {
         case 0:
             labelTitle.text = "Upcomig Movies"
-            viewModel.getMoviesFilter()
+            interactor.getMoviesFilter()
         case 1:
             labelTitle.text = "Popular Movies"
-            viewModel.fetchMovie(getPage: false)
+            interactor.fetchMovie(getPage: false)
         default:
             break
         }
@@ -168,7 +173,7 @@ extension ViewController: UICollectionViewDelegate {
                         forItemAt indexPath: IndexPath
     ) {
         if indexPath.row == movies.count-1, segmentedControl.selectedSegmentIndex == 1 {
-            viewModel.fetchMovie(getPage: true)
+            interactor.fetchMovie(getPage: true)
         }
     }
 }

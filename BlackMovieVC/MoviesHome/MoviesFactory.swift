@@ -5,11 +5,12 @@
 //  Created by Igor Gomes  on 04/10/22.
 //
 
-import Foundation
+import UIKit
 
 enum HomeFactory {
     static func make() -> ViewController {
-        let presenter = MoviesPresenter()
+        let coordinator = MoviesCoordinator(idMovie: 1123)
+        let presenter = MoviesPresenter(coordinator: coordinator)
         let service = MovieService()
         let interactor = MoviesInteractor(service: service, presenter: presenter)
         let viewController = ViewController(interactor: interactor)

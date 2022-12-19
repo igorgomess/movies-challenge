@@ -3,7 +3,7 @@ import UIKit
 class DetailsViewController: UIViewController {
 
     var actors = [ActorsMovie]()
-    var DetailsviewModel = DetailsViewModel()
+    var interactor: DetailsInteractor
     let idMovie: Int
     
     let imageMovie: UIImageView = {
@@ -77,13 +77,16 @@ class DetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configConstraints()
-        DetailsviewModel.detailsViewController = self
-        DetailsviewModel.fetchActor(idMovie: idMovie)
-        DetailsviewModel.fetchDetailsMovie(idMovie: idMovie)
+        interactor.fetchActor(idMovie: idMovie)
+        interactor.fetchDetailsMovie(idMovie: idMovie)
     }
     init (idMovie: Int) {
         self.idMovie = idMovie
+        let service = MovieService()
+        let presenter = DetailsPresenter()
+        self.interactor = DetailsInteractor(service: service, presenter: presenter)
         super .init(nibName: nil, bundle: nil)
+        presenter.detailsViewController = self
         configConstraints()
         setupConstraints()
     }
@@ -92,14 +95,14 @@ class DetailsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func displayActorsMovie(actors: [ActorsMovie]) {
+    func display(actors: [ActorsMovie]) {
         DispatchQueue.main.async {
             self.actors = actors
             self.collectionViewActors.reloadData()
         }
     }
 
-    func showDetailsMovie(detailsMovie: ResponseDetailsMovie){
+    func show(detailsMovie: ResponseDetailsMovie){
         guard let url = URL(string: "https://image.tmdb.org/t/p/w500\(detailsMovie.backDropPath)")
         else { return }
         DispatchQueue.main.async {
@@ -111,9 +114,9 @@ class DetailsViewController: UIViewController {
         }
     }
 
-    func showError(error: Error) {
+    func show(error: String) {
         DispatchQueue.main.async {
-            let alert = UIAlertController(title: "Ops, ocorreu um erro", message: error.localizedDescription, preferredStyle: .alert)
+            let alert = UIAlertController(title: "Ops, ocorreu um erro", message: error, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true)
         }
